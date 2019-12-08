@@ -70,7 +70,7 @@ client
 //             event.reply('不要再說了，我肚子好餓，趕快餵我！')
 //     }
 // });
-app.post('/', linebotParser);
+// app.post('/', linebotParser);
 app.listen(process.env.PORT || 3000, () => {
     console.log('Express server start')
 });
