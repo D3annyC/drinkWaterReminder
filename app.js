@@ -44,11 +44,11 @@ bot.on('message', function (event) {
         default:
             event.reply('不要再說了，我肚子好餓，趕快餵我！')
     }
-    event.reply(event.message.text).then(function (data) {
-        // success
-    }).catch(function (error) {
-        // error
-    });
+    // event.reply(event.message.text).then(function (data) {
+    //     // success
+    // }).catch(function (error) {
+    //     // error
+    // });
 });
 app.post('/', linebotParser);
 app.listen(process.env.PORT || 3000, () => {
