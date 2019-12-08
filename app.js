@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 const linebot = require('linebot');
+const agenda = new Agenda();
+
 // 判別開發環境
 if (process.env.NODE_ENV !== 'production') {      // 如果不是 production 模式
     require('dotenv').config()                      // 使用 dotenv 讀取 .env 檔案
@@ -10,30 +12,29 @@ const bot = linebot({
     channelSecret: process.env.CHANNEL_SECRET,
     channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
 });
-// create LINE SDK client
-const client = new line.Client(config);
-// create user ID from env variable
-const userId = process.env.USER_ID || defaultUserId;
 
-let message = [
-    {
-        type: "text",
-        text: "喝水了0.0b"
-    },
-    {
-        type: "sticker",
-        packageId: "1",
-        stickerId: "410"
-    }
-];
+agenda.define('remindDrinkingWater', async job => {
+    // create LINE SDK client
+    const client = new line.Client(config);
+    // create user ID from env variable
+    const userId = process.env.USER_ID || defaultUserId;
 
-client
-    .pushMessage(userId, message)
-    .then(() => console.log({
-        success: true,
-        events: message
-    }))
-    .catch(err => console.log(err))
+    let message = [
+        {
+            type: "text",
+            text: "喝水了0.0b"
+        }
+    ];
+
+    client
+        .pushMessage(userId, message)
+        .then(() => console.log({
+            success: true,
+            events: message
+        }))
+        .catch(err => console.log(err))
+});
+agenda.every('15 minutes', 'remindDrinkingWater');
 
 // const linebotParser = bot.parser();
 // bot.on('message', function (event) {
