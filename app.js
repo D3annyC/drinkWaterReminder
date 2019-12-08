@@ -1,7 +1,8 @@
 const express = require('express')
 const app = express()
 const linebot = require('linebot');
-const agenda = new Agenda();
+var Agenda = require('agenda');
+var agenda = new Agenda();
 
 // 判別開發環境
 if (process.env.NODE_ENV !== 'production') {      // 如果不是 production 模式
