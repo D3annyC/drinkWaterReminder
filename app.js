@@ -16,20 +16,16 @@ const bot = linebot({
     channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
 });
 
-const linebotParser = bot.parser();
-
 agenda.define('waterDrinkingReminder', async job => {
-    // await bot.on('message', function (event) {
-    //     console.log(event);
-    //     event.reply([
-    //         { type: 'text', text: 'Hello, world 1' },
-    //         { type: 'text', text: 'Hello, world 2' }
-    //     ]);
-    // });
-    await event.reply([
-        { type: 'text', text: 'Hello, world 1' },
-        { type: 'text', text: 'Hello, world 2' }
-    ]);
+    const linebotParser = bot.parser();
+
+    bot.on('message', function (event) {
+        console.log(event);
+        event.reply([
+            { type: 'text', text: 'Hello, world 1' },
+            { type: 'text', text: 'Hello, world 2' }
+        ]);
+    });
 
     await app.post('/', linebotParser);
 });
