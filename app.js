@@ -19,7 +19,6 @@ const bot = linebot({
 const linebotParser = bot.parser();
 
 agenda.define('waterDrinkingReminder', async job => {
-    await User.remove({ lastLogIn: { $lt: twoDaysAgo } });
     await bot.on('message', function (event) {
         console.log(event);
         event.reply([
