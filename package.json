@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/D3annyC/drinkWaterReminder#readme",
   "dependencies": {
+    "@line/bot-sdk": "^6.8.3",
     "agenda": "^2.2.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
