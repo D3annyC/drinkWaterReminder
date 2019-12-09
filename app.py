@@ -38,7 +38,7 @@ def callback():
 
 # 處理訊息
 @sched.scheduled_job('interval', minutes=3)
-def handle_message(event):
+def handle_message():
     message = TextSendMessage(text="HELLO WORLD!")
     #line_bot_api.reply_message(event.reply_token, message)
     line_bot_api.push_message(USER_ID, message)
