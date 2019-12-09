@@ -37,12 +37,15 @@ def callback():
 
 # 處理訊息
 def handle_message():
-    message = TextSendMessage(text="HELLO WORLD!")
-    #line_bot_api.reply_message(event.reply_token, message)
+    message = TextSendMessage(text="喝水囉0.0b")
     line_bot_api.push_message(USER_ID, message)
+    ing_message = ImageSendMessage(
+        original_content_url='https://i.imgflip.com/3iwbld.jpg',
+        preview_image_url='https://i.imgflip.com/3iwbld.jpg')
+    line_bot_api.push_message(USER_ID, ing_message)
 
 sched = BackgroundScheduler(daemon=True)
-sched.add_job(handle_message,'interval',minutes=5)
+sched.add_job(handle_message,'interval',minutes=60)
 sched.start()
 
 import os
