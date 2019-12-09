@@ -1,4 +1,5 @@
 from flask import Flask, request, abort
+from apscheduler.schedulers.background import BackgroundScheduler
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -9,6 +10,7 @@ from linebot.exceptions import (
 from linebot.models import *
 
 app = Flask(__name__)
+sched = BlockingScheduler()
 
 # Channel Access Token
 line_bot_api = LineBotApi('nXKOG0Hc2d5V7KCrpZEe1pqsXNBqSB+PUaD8qe6YYCroZilSi8Q+GUhfxwxiE5Dfbq4p5bNKOKlOeijlUEViciIsjWDuPQCZl8Mxn+lAiWnccey7/9Fg20L53gJqpIIbBcqd+oBuHe/Gm9Aiyys5cwdB04t89/1O/w1cDnyilFU=')
@@ -32,11 +34,15 @@ def callback():
 
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
+@sched.scheduled_job('interval', minutes=1)
 def handle_message(event):
-    message = TextSendMessage(text=event.message.text)
-    line_bot_api.reply_message(event.reply_token, message)
+    message = TextSendMessage(text="HELLO WORLD!")
+    #line_bot_api.reply_message(event.reply_token, message)
+    line_bot_api.push_message(event.push_token, message)
 
 import os
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
+
+sched.start()
