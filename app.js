@@ -1,6 +1,9 @@
-const express = require('express')
-const app = express()
-const linebot = require('linebot')
+const express = require('express');
+const app = express();
+const linebot = require('linebot');
+
+const Agenda = require('agenda');
+const agenda = new Agenda();
 
 // 判別開發環境
 if (process.env.NODE_ENV !== 'production') {      // 如果不是 production 模式
@@ -15,44 +18,24 @@ const bot = linebot({
 
 const linebotParser = bot.parser();
 
+agenda.define('waterDrinkingReminder', async job => {
+    await User.remove({ lastLogIn: { $lt: twoDaysAgo } });
+    await bot.on('message', function (event) {
+        console.log(event);
+        event.reply([
+            { type: 'text', text: 'Hello, world 1' },
+            { type: 'text', text: 'Hello, world 2' }
+        ]);
+    });
 
-bot.on('message', function (event) {
-    console.log(event);
-    switch (event.message.text) {
-        case '你':
-            event.reply('我快餓昏了，拜託你！')
-            break
-        case 'hi':
-            event.reply('我等你等好久了，給我東西吃！')
-            break
-        case 'hello':
-            event.reply('我沒心情跟你說 hello，我需要食物！')
-            break
-        case '天氣':
-            event.reply('別管天氣了，我餓到快沒力氣了！')
-            break
-        case '聽說':
-            event.reply('聽說什麼，你沒聽到我說我肚子好餓嗎？')
-            break
-        case '問':
-            event.reply('問什麼不重要，重要是我肚子好餓，給我東西吃！')
-            break
-        case '說':
-            event.reply('說什麼說，不要再說了，等吃飽再說吧！')
-            break
-        case '名字':
-            event.reply('我叫小雞，你是我的主人，你不知道嗎？')
-            break
-        case '媽媽':
-            event.reply('你就是我媽，我受不了！')
-            break
-        default:
-            event.reply('不要再說了，我肚子好餓，趕快餵我！')
-    }
+    await app.post('/', linebotParser);
 });
 
-app.post('/', linebotParser);
+(async function () { // IIFE to give access to async/await
+    await agenda.start();
+    await agenda.every('1 minutes', 'waterDrinkingReminder');
+})();
 
 app.listen(process.env.PORT || 3000, () => {
-    console.log('Express server start')
+    console.log('Express server start');
 });
