@@ -33,7 +33,6 @@ def callback():
     return 'OK'
 
 # 處理訊息
-@handler.add(MessageEvent, message=TextMessage)
 @sched.scheduled_job('interval', minutes=1)
 def handle_message(event):
     message = TextSendMessage(text="HELLO WORLD!")
