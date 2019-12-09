@@ -35,11 +35,11 @@ def callback():
     return 'OK'
 
 # 處理訊息
-@sched.scheduled_job('interval', minutes=1)
+@sched.scheduled_job('interval', minutes=5)
 def handle_message(event):
     message = TextSendMessage(text="HELLO WORLD!")
     #line_bot_api.reply_message(event.reply_token, message)
-    line_bot_api.push_message(event.push_token, message)
+    line_bot_api.push_message(event.source.user_id, message)
 
 import os
 if __name__ == "__main__":
