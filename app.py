@@ -11,10 +11,6 @@ from linebot.models import *
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
-sched = BackgroundScheduler(daemon=True)
-sched.add_job(handle_message,'interval',minutes=5)
-sched.start()
-
 app = Flask(__name__)
 
 # Channel Access Token
@@ -40,11 +36,14 @@ def callback():
     return 'OK'
 
 # 處理訊息
-@handler.add(MessageEvent, message=TextMessage)
 def handle_message():
     message = TextSendMessage(text="HELLO WORLD!")
     #line_bot_api.reply_message(event.reply_token, message)
     line_bot_api.push_message(USER_ID, message)
+
+sched = BackgroundScheduler(daemon=True)
+sched.add_job(handle_message,'interval',minutes=5)
+sched.start()
 
 import os
 if __name__ == "__main__":
