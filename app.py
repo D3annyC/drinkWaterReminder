@@ -11,7 +11,7 @@ from linebot.models import *
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
-sched = BlockingScheduler()
+sched = BackgroundScheduler()
 app = Flask(__name__)
 
 # Channel Access Token
