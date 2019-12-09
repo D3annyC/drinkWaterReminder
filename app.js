@@ -13,6 +13,9 @@ const bot = linebot({
     channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
 });
 
+const linebotParser = bot.parser();
+
+
 bot.on('message', function (event) {
     console.log(event);
     switch (event.message.text) {
@@ -47,6 +50,7 @@ bot.on('message', function (event) {
             event.reply('不要再說了，我肚子好餓，趕快餵我！')
     }
 });
+
 app.post('/', linebotParser);
 
 app.listen(process.env.PORT || 3000, () => {
