@@ -1,5 +1,5 @@
+# -*- coding: utf8 -*-
 from flask import Flask, request, abort
-from apscheduler.schedulers.background import BackgroundScheduler
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -9,8 +9,10 @@ from linebot.exceptions import (
 )
 from linebot.models import *
 
-app = Flask(__name__)
+from apscheduler.schedulers.background import BackgroundScheduler
+
 sched = BlockingScheduler()
+app = Flask(__name__)
 
 # Channel Access Token
 line_bot_api = LineBotApi('nXKOG0Hc2d5V7KCrpZEe1pqsXNBqSB+PUaD8qe6YYCroZilSi8Q+GUhfxwxiE5Dfbq4p5bNKOKlOeijlUEViciIsjWDuPQCZl8Mxn+lAiWnccey7/9Fg20L53gJqpIIbBcqd+oBuHe/Gm9Aiyys5cwdB04t89/1O/w1cDnyilFU=')
